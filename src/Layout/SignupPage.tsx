@@ -28,7 +28,6 @@ const SignupPage = () => {
     name: Yup.string().required("Required"),
     email: Yup.string().email("Invalid email").required("Required"),
   });
-  console.log(causesItemsVar());
   const submit = async (values: { name: string; email: string }) => {
     const requestOptions = {
       method: "POST",
@@ -44,10 +43,10 @@ const SignupPage = () => {
         "https://dev.api.bono.so/v1/auth/register/anonymous",
         requestOptions
       );
-      if (res.status !== 200) {
-        alert("Something went wrong");
-      } else {
+      if (res.ok) {
         alert("Success");
+      } else {
+        alert("Something went wrong");
       }
     } catch (err) {
       console.log(err);
