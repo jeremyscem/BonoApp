@@ -1,4 +1,15 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'bono-webapp-causes-images.s3.amazonaws.com',
+        port: '',
+        pathname: '/global/*',
+      },
+    ],
+  },
+};
 
-export default nextConfig;
+export default nextConfig

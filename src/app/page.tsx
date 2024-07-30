@@ -1,95 +1,140 @@
+"use client";
+import HeaderMenu from "@/components/HeaderMenu";
+import useIsMounted from "@/utils/useIsMounted";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import {
+  Box,
+  Button,
+  Container,
+  InputLabel,
+  Link,
+  Typography,
+} from "@mui/material";
 import Image from "next/image";
-import styles from "./page.module.css";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { isDesktop } from "react-device-detect";
+const HomeListItems = [
+  "Choose causes",
+  "Save your portfolio",
+  "Subscribe to make an impact",
+  "Receive weekly impact updates",
+];
 
 export default function Home() {
+  const [isDesktopView, setIsDesktopView] = useState(false);
+  const isMounted = useIsMounted();
+  const { push } = useRouter();
+  const pushToSelection = () => {
+    push("/selection");
+  };
+  useEffect(() => {
+    if (isMounted.current) {
+      setIsDesktopView(isDesktop);
+    }
+  }, [isMounted]);
+
+  if (!isMounted) {
+    return null;
+  }
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <>
+      {isDesktopView ? <HeaderMenu /> : <></>}
+
+      <Container
+        sx={{
+          paddingTop: isDesktopView ? "173px" : "20px",
+          width: isDesktopView ? "max-content" : "100%",
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: isDesktopView ? "initial" : "space-between",
+          paddingBottom: "50px",
+        }}
+      >
+        <Box sx={isDesktopView ? { marginBottom: "50px" } : {}}>
+          {isDesktopView ? (
+            <></>
+          ) : (
+            <Image src="/bono-icon.svg" alt="logo" width={50} height={50} />
+          )}
+
+          <Typography variant="h1" sx={{ marginBottom: "10px" }}>
+            Let&apos;s build your nonprofit portfolio
+          </Typography>
+          <Typography variant="h2" sx={{ marginBottom: "25px" }}>
+            Join the movement and help fix the October 7th aftermath
+          </Typography>
+          <Box sx={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+            {HomeListItems.map((item, i) => (
+              <InputLabel key={i}>
+                <Box
+                  sx={{ display: "flex", alignItems: "center", gap: "10px" }}
+                >
+                  <Box>
+                    <Typography
+                      sx={{
+                        backgroundColor: "rgb(91, 134, 243)",
+                        width: "20px",
+                        height: "20px",
+                        borderRadius: "50%",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        color: "white",
+                      }}
+                      variant="body1"
+                    >
+                      {i + 1}
+                    </Typography>
+                  </Box>
+                  <Typography variant="body1">{item}</Typography>
+                </Box>
+              </InputLabel>
+            ))}
+          </Box>
+        </Box>
+
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "10px",
+            textAlign: "center",
+            alignItems: "center",
+          }}
+        >
+          <Button
+            sx={{
+              backgroundColor: "rgb(17, 17, 17)",
+              borderRadius: "32px",
+              height: "48px",
+              color: "white",
+              marginBottom: isDesktopView ? "20px" : "",
+              width: isDesktopView ? "346px" : "100%",
+              "&:hover": {
+                backgroundColor: "rgb(17, 17, 17)",
+                opacity: 0.8,
+              },
+            }}
+            onClick={pushToSelection}
+            endIcon={<ArrowForwardIcon />}
           >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+            Let&apos;s start
+          </Button>
+          <Typography>
+            By continuing you agree to{" "}
+            <Link href="https://www.bono.so/tc" target="_blank">
+              Terms and conditions
+            </Link>{" "}
+            and{" "}
+            <Link href="https://www.bono.so/privacy-policy" target="_blank">
+              Privacy Policy
+            </Link>
+          </Typography>
+        </Box>
+      </Container>
+    </>
   );
 }
